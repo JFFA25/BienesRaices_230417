@@ -1,13 +1,9 @@
 # BienesRaices_230417
-Proyecto de la clase para unidad 2  de la asignatura de Aplicaciones Web Orientada a Servicios (AWS) a travez de una aplicacion WEB de Arquitectura SOA para el caso de estudio de una una empresa de Bienes Raices (Compra- Venta de Bienes Inmuebles)
+Proyecto de Clase para la Unidad 2 de la asignatura de Aplicaciones Web Orientadas a Servicios (AWOS), a través de una aplicación WEB en Arquitectura SOA para el caso de estudio de una empresa de Bienes Raíces (Compra - Venta de Bienes Inmuebles)
 
 ## Descripcion
 
-Para poder demostrar y aprender la creación y consumo de Interfaces de Programación
-de Aplicaciones (API) , con el uso de Aplicaciones WeB , en este proyecto se realizarana un
-sistema CRUD con el contexto  de las operaciones comunes comunes para una empresa de Bienes Raíces,
-mediante la compra , venta y renta de propiedades , utilizando las reglas de negocio apropiadas para la gestion
-identificación y control de usuarios.
+Para poder demostrar y aprender la creación y consumo de Interfaces de Programación de Aplicación (API), con el uso de Aplicaciones Web, en este proyecto se realizará un sistema CRUD en el contexto de las operaciones comunes para una empresa de Bienes Raíces , mediante la compra, venta y renta de propiedades, utilizando las reglas de negocio apropiadas para la gestión, identificación y control de usarios.
 
  ## Historial de Practicas
 
@@ -15,10 +11,8 @@ identificación y control de usuarios.
 |--|--|--|--|--|
 |8.|17/10/2024|Nuevo repositorio del Proyecto Implementando .gitignore|1|✅Activa|
 
-## Autor
-José Francisco Flores Amador / [@JFFA25](https://github.com/JFFA25) 
+### Autor
+ **José Francisco Flores Amador** / [@JFFA25](https://github.com/JFFA25) 
 Unidad 2
-Apliaciones Web Orientada a Servicios
-Septiembre 2024
- 
-
+Aplicaciones Web Orientadas a Servicios 
+Octubre 2024
