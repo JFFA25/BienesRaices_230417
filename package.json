@@ -1,0 +1,26 @@
+{
+  "name": "mx.utxj.ti.awos.bienesraices",
+  "version": "1.0.0",
+  "description": "Proyecto de clase para la Unidad 2 , de AWOS , utilizando Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JFFA25/BienesRaices_230417.git"
+  },
+  "keywords": [
+    "MVC",
+    "Pug",
+    "Tailwind",
+    "MySQL",
+    "Sequelize"
+  ],
+  "author": "José Francisco Flores Amador",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JFFA25/BienesRaices_230417/issues"
+  },
+  "homepage": "https://github.com/JFFA25/BienesRaices_230417#readme"
+}
