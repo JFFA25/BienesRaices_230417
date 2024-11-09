@@ -6,14 +6,7 @@ router.get("/",function(req,res){
     res.send("Hola Mundo en express")
 })
 
-router.get("/quienEres",function(req,res){
-    res.json(
-        {
-            "nombre" : "Jose Francisco Flores Amador",
-            "carrera": "TI DSM",
-            "grado": "4°",
-            "grupo": "A"
-        }
-    )
+router.post("/",function(req,res){
+    res.json({msg: 'respuesta tipo POST'})
 })
 export default router
