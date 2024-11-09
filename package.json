@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Proyecto de clase para la Unidad 2 , de AWOS , utilizando Node.js",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js"
