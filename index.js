@@ -4,12 +4,16 @@ import db from './Config/db.js'
 //Crear la app
 const app = express();
 
+//Habilitar lectura de datos del formulario
+app.use(express.urlencoded({extended:true}))
+
 //Routing
 app.use('/auth',usuarioRoutes)
 
 //Conexion a la bd
 try{
     await db.authenticate();
+    db.sync()
     console.log('Conexion Correcta a la Base de datos')
 }catch(error){
     console.log(error)
