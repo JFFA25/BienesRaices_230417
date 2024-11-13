@@ -12,7 +12,7 @@ Para poder demostrar y aprender la creación y consumo de Interfaces de Programa
 |8.|17/10/2024|Nuevo repositorio del Proyecto Implementando .gitignore|1|⏱️Finalizada|
 |9.|22/10/2024|Creacion de una Aplicacion Web usando Express|12|⏱️Finalizada|
 |10.|23/10/2024|Operaciones Basicas de un API a traves de los verbos HTTP|12|⏱️Finalizada|
-|11.|05/11/2024|Implementacion de las pantallas|13|✅Activa| 
+|11.|05/11/2024|Implementacion de las pantallas|13|⏱️Finalizada| 
 |12.|--|--|--|--|
 
 ### Tech Stack
