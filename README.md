@@ -12,8 +12,8 @@ Para poder demostrar y aprender la creación y consumo de Interfaces de Programa
 |8.|17/10/2024|Nuevo repositorio del Proyecto Implementando .gitignore|1|⏱️Finalizada|
 |9.|22/10/2024|Creacion de una Aplicacion Web usando Express|12|⏱️Finalizada|
 |10.|23/10/2024|Operaciones Basicas de un API a traves de los verbos HTTP|12|⏱️Finalizada|
-|11.|05/11/2024|Implementacion de las pantallas|13|✅Activa| 
-|12.|--|--|--|--|
+|11.|05/11/2024|Implementacion de las pantallas|13|⏱️Finalizada| 
+|12.|20/11/2024|Integracion de funcionalidad de creación de cuentas de Usuario|30|✅Activa|
 
 ### Tech Stack
 ![NodeJS](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white) ![Express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
