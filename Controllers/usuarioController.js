@@ -2,14 +2,17 @@ import { check ,validationResult } from 'express-validator'
 import Usuario from '../Models/Usuario.js'
 import {generarId} from '../Helpers/tokens.js'
 import {emailRegistro} from '../Helpers/emails.js'
+import { where } from 'sequelize'
 const formularioLogin = (req,res) => {
     res.render('auth/login',{
          pagina : 'IniciarSesión'
     })
 }
 const formularioRegistro = (req,res) => {
+
     res.render('auth/registro',{
-        pagina : 'Crear Cuenta'
+        pagina : 'Crear Cuenta',
+        csrfToken : req.csrfToken()
     })
 }
 const registrar = async (req,res) => {
@@ -28,6 +31,7 @@ const registrar = async (req,res) => {
             //Errores
             return res.render('auth/registro',{
                 pagina : 'Crear Cuenta',
+                csrfToken : req.csrfToken(),
                 errores: resultado.array(),
                 usuario: {
                     nombre : req.body.nombre,
@@ -45,6 +49,7 @@ const registrar = async (req,res) => {
         if(existeUsuario){            
             return res.render('auth/registro',{
                 pagina : 'Crear Cuenta',
+                csrfToken : req.csrfToken(),
                 errores: [{msg : 'El usuario ya esta registrado'}],
                 usuario: {
                     nombre : req.body.nombre,
@@ -72,12 +77,33 @@ const registrar = async (req,res) => {
         res.render('templates/mensaje',{
             pagina : 'Cuenta Creada Correctamente',
             mensaje : 'Se envio un correo de confirmacion a tu correo , da clic en el enlace para confirmar'
-        })
-        
-
-        
-
+        })            
 }
+        //Formulario que comprueba una cuenta
+        const confirmar = async (req,res) =>{
+            const {token} = req.params;
+
+        //Verificar si el token es valido
+       const usuario = await Usuario.findOne({ where : {token}})
+
+       if(!usuario){
+            return res.render('auth/confirmar',{
+                pagina:'Error al confirmar cuenta',
+                mensaje:'Ups... Al parecer hubo un error al confirmar tu cuenta intentalo de nuevo',
+                error: true
+            })
+       }
+
+        //Confirmar la cuenta
+        usuario.token = null ;
+        usuario.confirmado = true ;
+        await usuario.save();
+        return res.render('auth/confirmar',{
+            pagina:'Cuenta Confirmada',
+            mensaje:'Cuenta Confirmada Correctamente'           
+        })
+        }
+
 const formularioPassword = (req,res) => {
     res.render('auth/password',{
         pagina : 'Ruecupera Tu Contraseña'
@@ -87,5 +113,6 @@ export {
     formularioLogin,
     formularioRegistro,
     registrar,
+    confirmar,
     formularioPassword
 }

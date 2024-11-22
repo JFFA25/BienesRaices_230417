@@ -21,7 +21,7 @@ const transport = nodemailer.createTransport({
           <p>Hola ${nombre} , comprueba tu cuenta en BienesRaices_230417</p>
 
            <p>Tu cuenta ya esta lista , solo debes confirmar en el siguiente enlace:
-           <a href="">Confirmar Cuenta </a> </p>
+           <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}">Confirmar Cuenta </a> </p>
 
           <p>Si tu no creaste esta cuenta , puedes ignorar el mensaje</p>
 
