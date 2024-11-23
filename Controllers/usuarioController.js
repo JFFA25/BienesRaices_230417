@@ -18,10 +18,11 @@ const formularioRegistro = (req,res) => {
 const registrar = async (req,res) => {
     
         //Validacion 
-        await check('nombre').notEmpty().withMessage('El Nombre no puede ir vacio').run(req)
-        await check('email').isEmail().withMessage('Eso no parece un email').run(req)
-        await check('password').isLength({min:8}).withMessage('La contraseña debe de ser minimo 8 caracteres').run(req)
-        await check('repeat_password').custom((value, { req }) => value === req.body.password).withMessage('Las contraseñas no coinciden').run(req)
+        await check('nombre').notEmpty().withMessage('El Nombre no puede ir vacio  (X)').run(req)
+        await check('fecha').isISO8601().withMessage('La fecha de nacimiento debe ser válida  (X)').run(req)
+        await check('email').isEmail().withMessage('Eso no parece un email  (X)').run(req)
+        await check('password').isLength({min:8}).withMessage('La contraseña debe de ser minimo 8 caracteres  (X)').run(req)
+        await check('repeat_password').custom((value, { req }) => value === req.body.password).withMessage('Las contraseñas no coinciden  (X)').run(req)
 
         
         let resultado = validationResult(req)
@@ -35,13 +36,14 @@ const registrar = async (req,res) => {
                 errores: resultado.array(),
                 usuario: {
                     nombre : req.body.nombre,
-                    email : req.body.email
+                    email : req.body.email,
+                    fecha: req.body.fecha,
                 }               
             })
 
         }
         //Extraer los datos
-        const {nombre,email,password} = req.body
+        const {nombre,email,password,fecha} = req.body
 
         //Verificar que el usuario no este duplicado
          const existeUsuario = await Usuario.findOne({where : {email}})
@@ -53,7 +55,8 @@ const registrar = async (req,res) => {
                 errores: [{msg : 'El usuario ya esta registrado'}],
                 usuario: {
                     nombre : req.body.nombre,
-                    email : req.body.email
+                    email : req.body.email,
+                    fecha: req.body.fecha,
                 }               
             })
 
@@ -63,6 +66,7 @@ const registrar = async (req,res) => {
             nombre,
             email,
             password,
+            fecha,
             token : generarId()
         })
         
@@ -96,7 +100,7 @@ const registrar = async (req,res) => {
 
         //Confirmar la cuenta
         usuario.token = null ;
-        usuario.confirmado = true ;
+        usuario.confirmado = 1;
         await usuario.save();
         return res.render('auth/confirmar',{
             pagina:'Cuenta Confirmada',

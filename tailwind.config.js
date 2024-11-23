@@ -10,6 +10,7 @@ export default {
         azulClaro: '#0B6C95',
         negro: '#040506',
         azulPrusia: '#063156',
+        error: '#FF5252',
       },
     },
   },

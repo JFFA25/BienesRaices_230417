@@ -18,13 +18,55 @@ const transport = nodemailer.createTransport({
       subject : 'Confirma tu cuenta en BienesRaices_230417.com',
       text : 'Confirma tu cuenta en BienesRaices_230417.com',
       html : `
-          <p>Hola ${nombre} , comprueba tu cuenta en BienesRaices_230417</p>
+              <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Confirmación de cuenta</title>
+    </head>
+    <body style="background-color: #FFFFFF; font-family: Arial, sans-serif; color: #040506; margin: 0; padding: 0;">
+        <div style="background-color: #3D95A9; padding: 20px; text-align: center;">
+            <h1 style="color: #FFFFFF;">BienesRaices_230417</h1>
+        </div>
 
-           <p>Tu cuenta ya esta lista , solo debes confirmar en el siguiente enlace:
-           <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}">Confirmar Cuenta </a> </p>
+        <div style="padding: 20px;">
+            <p style="font-size: 16px; color: #040506;">Hola ${nombre},</p>
 
-          <p>Si tu no creaste esta cuenta , puedes ignorar el mensaje</p>
+            <p style="font-size: 18px; color: #040506; font-weight: bold;">
+                ¡Bienvenido a la familia de BienesRaices_230417! Estamos emocionados de que hayas decidido unirte a nosotros.
+            </p>
+            <p style="font-size: 16px; color: #040506;">
+                Gracias por registrarte en <strong>BienesRaices_230417</strong>. Tu cuenta ya está lista, solo debes confirmar tu correo haciendo clic en el siguiente enlace:
+            </p>
 
+            <p style="text-align: center;">
+                <a href="${process.env.BACKEND_URL}:${process.env.PORT ?? 3000}/auth/confirmar/${token}" 
+                  style="font-size: 18px; color: #FFFFFF; background-color: #0B6C95; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+                  Confirmar Cuenta
+                </a>
+            </p>
+
+            <p style="font-size: 16px; color: #040506;">
+                Si no creaste esta cuenta, puedes ignorar este mensaje. No te preocupes, tu cuenta no será activada sin tu confirmación.
+            </p>
+
+            <br>
+            <div style="margin-top: 30px; padding: 20px; background-color: #063156; color: #FFFFFF; text-align: center;">
+                <p style="font-size: 16px;">Saludos cordiales,</p>
+                <p style="font-size: 18px; font-weight: bold;">Jose Francisco Flores Amador</p>
+                <img src="https://xdddd.s3.us-east-2.amazonaws.com/firmota.jpeg" alt="firma" width="250px" height="150px">
+                <p style="font-size: 16px;">CEO y Fundador de BienesRaices_230417</p>
+                <p style="font-size: 14px;">"Nuestro compromiso es brindarte las mejores oportunidades en el mundo inmobiliario."</p>
+            </div>
+
+            <div style="margin-top: 30px; padding: 20px; background-color: #063156; color: #FFFFFF; text-align: center;">
+                <p style="font-size: 14px;">Si tienes alguna pregunta, no dudes en contactarnos.</p>
+                <p style="font-size: 14px;">BienesRaices_230417 - Todos los derechos reservados</p>
+            </div>
+        </div>
+    </body>
+    </html>
       `
   })
 }
