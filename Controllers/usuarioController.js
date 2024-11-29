@@ -1,4 +1,4 @@
-import { check ,validationResult } from 'express-validator'
+import { check ,checkExact,validationResult } from 'express-validator'
 import Usuario from '../Models/Usuario.js'
 import {generarId} from '../Helpers/tokens.js'
 import {emailRegistro} from '../Helpers/emails.js'
@@ -18,11 +18,11 @@ const formularioRegistro = (req,res) => {
 const registrar = async (req,res) => {
     
         //Validacion 
-        await check('nombre').notEmpty().withMessage('El Nombre no puede ir vacio  (X)').run(req)
-        await check('fecha').isISO8601().withMessage('La fecha de nacimiento debe ser válida  (X)').run(req)
-        await check('email').isEmail().withMessage('Eso no parece un email  (X)').run(req)
-        await check('password').isLength({min:8}).withMessage('La contraseña debe de ser minimo 8 caracteres  (X)').run(req)
-        await check('repeat_password').custom((value, { req }) => value === req.body.password).withMessage('Las contraseñas no coinciden  (X)').run(req)
+        await check('nombre').notEmpty().withMessage('El Nombre no puede ir vacio').run(req)
+        await check('fecha').isISO8601().withMessage('La fecha de nacimiento debe ser válida').run(req)
+        await check('email').isEmail().withMessage('Eso no parece un email ').run(req)
+        await check('password').isLength({min:8}).withMessage('La contraseña debe de ser minimo 8 caracteres').run(req)
+        await check('repeat_password').custom((value, { req }) => value === req.body.password).withMessage('Las contraseñas no coinciden').run(req)
 
         
         let resultado = validationResult(req)
@@ -40,7 +40,6 @@ const registrar = async (req,res) => {
                     fecha: req.body.fecha,
                 }               
             })
-
         }
         //Extraer los datos
         const {nombre,email,password,fecha} = req.body
@@ -110,13 +109,34 @@ const registrar = async (req,res) => {
 
 const formularioPassword = (req,res) => {
     res.render('auth/password',{
-        pagina : 'Ruecupera Tu Contraseña'
+        pagina : 'Ruecupera Tu Contraseña',
+        csrfToken : req.csrfToken()
     })
 }
+
+const resetPassword = async (req, res) => {
+    await check('email').isEmail().withMessage('Eso no parece un email').run(req);
+    let resultado = validationResult(req);
+    
+    if (!resultado.isEmpty()) {
+        return res.render('auth/password', {
+            pagina: 'Recupera Tu Contraseña',
+            csrfToken: req.csrfToken(),
+            errores: resultado.array()  
+        });
+    }
+};
+
+
+
+
+
+
 export {
     formularioLogin,
     formularioRegistro,
     registrar,
     confirmar,
-    formularioPassword
+    formularioPassword,
+    resetPassword
 }

@@ -13,7 +13,7 @@ Para poder demostrar y aprender la creación y consumo de Interfaces de Programa
 |9.|22/10/2024|Creacion de una Aplicacion Web usando Express|12|⏱️Finalizada|
 |10.|23/10/2024|Operaciones Basicas de un API a traves de los verbos HTTP|12|⏱️Finalizada|
 |11.|05/11/2024|Implementacion de las pantallas|13|⏱️Finalizada| 
-|12.|20/11/2024|Integracion de funcionalidad de creación de cuentas de Usuario|30|✅Activa|
+|12.|20/11/2024|Integracion de funcionalidad de creación de cuentas de Usuario|30|⏱️Finalizada|
 |12.|23/11/2024| Examen Practico - Unidad 2|10|⏱️Finalizada|
 
 
