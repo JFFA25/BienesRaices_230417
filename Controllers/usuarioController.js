@@ -1,8 +1,11 @@
-import { check ,checkExact,validationResult } from 'express-validator'
+import { body, check ,checkExact,validationResult } from 'express-validator'
 import Usuario from '../Models/Usuario.js'
 import {generarId} from '../Helpers/tokens.js'
-import {emailRegistro} from '../Helpers/emails.js'
+import {emailRegistro , emailOlvidePassword} from '../Helpers/emails.js'
 import { where } from 'sequelize'
+import pkg from 'nodemailer/lib/xoauth2/index.js';
+const { errorMonitor } = pkg;
+
 const formularioLogin = (req,res) => {
     res.render('auth/login',{
          pagina : 'IniciarSesión'
@@ -125,7 +128,42 @@ const resetPassword = async (req, res) => {
             errores: resultado.array()  
         });
     }
+    //Buscar el usuario
+    const  { email } = req.body
+    const usuario = await Usuario.findOne({where:{email}})
+    if (!usuario){
+        return res.render('auth/password',{
+            pagina: ' Recupera tu acceso a Bienes Raices',
+            csrfToken : req.csrfToken(),
+            errores : [{msg :'El Email no pertenece a ningun usuario'}]
+        })
+    }
+    //Genrar token y enviar emial
+    usuario.token= generarId();
+    await usuario.save();
+
+    //Enviar emial
+    emailOlvidePassword({
+        email: usuario.email,
+        nombre : usuario.nombre,
+        token : usuario.token        
+    })
+    //Renderizar mensaje
+    res.render('templates/mensaje',{
+        pagina : 'Restablece tu contraseña',
+        mensaje : 'Hemos enviado un email con las instrucciones'
+    }) 
+
+
 };
+
+const comprobarToken = (req,res,next) => {
+next()
+}
+
+const nuevaContrasena = (req,res) => {
+    
+}
 
 
 
@@ -138,5 +176,7 @@ export {
     registrar,
     confirmar,
     formularioPassword,
-    resetPassword
+    resetPassword,
+    comprobarToken,
+    nuevaContrasena
 }
