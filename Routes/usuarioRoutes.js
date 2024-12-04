@@ -10,8 +10,9 @@ router.get('/confirmar/:token',confirmar)
 router.get('/password',formularioPassword)
 router.post('/password',resetPassword)
 //Almacena la nueva contraseña
-router.get('/password/: token',comprobarToken)
-router.post('/password/: token',nuevaContrasena)
+router.get('/password/:token', comprobarToken);
+router.post('/password/:token', nuevaContrasena);
+
 
  
 export default router
