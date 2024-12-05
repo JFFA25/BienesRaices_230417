@@ -1,4 +1,5 @@
 import { body, check ,checkExact,validationResult } from 'express-validator'
+import bcrypt from 'bcrypt'
 import Usuario from '../Models/Usuario.js'
 import {generarId} from '../Helpers/tokens.js'
 import {emailRegistro , emailOlvidePassword} from '../Helpers/emails.js'
@@ -8,7 +9,8 @@ const { errorMonitor } = pkg;
 
 const formularioLogin = (req,res) => {
     res.render('auth/login',{
-         pagina : 'IniciarSesión'
+         pagina : 'IniciarSesión',
+         csrfToken : req.csrfToken()
     })
 }
 const formularioRegistro = (req,res) => {
@@ -169,13 +171,44 @@ const comprobarToken = async (req, res) => {
             });
         }
         //Mostrar formulario para cambiar el password
+        res.render('auth/reset',{
+           pagina:  'Restablece tu contraseña',
+           csrfToken : req.csrfToken() 
+        })
         
 }
-const nuevaContrasena = (req,res) => {
+    const nuevaContrasena = async (req,res) => {
+   //Validar la contraseña
+   await check('password').isLength({min:8}).withMessage('La contraseña debe de ser minimo 8 caracteres').run(req)
+   let resultado = validationResult(req)
+    
+   //Verificar que el resulatado este vacio
+   if(!resultado.isEmpty()){
+       //Errores
+       return res.render('auth/reset',{
+           pagina : 'Restablecer tu contraseña',
+           csrfToken : req.csrfToken(),
+           errores: resultado.array(),             
+       })
+   }
+    const {token} = req.params
+    const {password} = req.body
+    //Identificar quien hace el cambio
+   const  usuario = await Usuario.findOne({where:{token}})
+   console.log(usuario)
+    //Hashear la nueva contraseña
+    const salt  = await bcrypt.genSalt(10)
+    usuario.password =  await bcrypt.hash(password , salt); 
+    usuario.token= null
+    await usuario.save()
+    res.render('auth/confirmar',{
+        pagina : 'Contraseña Actualizada',
+        mensaje : 'Se cambio la contraseña correctamente'
+    })
 
-}
+    }
 
-export {
+    export {
     formularioLogin,
     formularioRegistro,
     registrar,
@@ -184,4 +217,4 @@ export {
     resetPassword,
     comprobarToken,
     nuevaContrasena
-}
+    }
