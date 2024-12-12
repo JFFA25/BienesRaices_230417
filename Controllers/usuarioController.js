@@ -1,7 +1,8 @@
 import { body, check ,checkExact,validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import Usuario from '../Models/Usuario.js'
-import {generarId} from '../Helpers/tokens.js'
+import {generarJWT,generarId} from '../Helpers/tokens.js'
 import {emailRegistro , emailOlvidePassword} from '../Helpers/emails.js'
 import { where } from 'sequelize'
 import pkg from 'nodemailer/lib/xoauth2/index.js';
@@ -60,7 +61,17 @@ const autenticar = async (req, res) => {
             errores : [{msg: 'La Contraseña es Incorrecta'}]
         })
      }
+     //Autenticar el usuario
+     const token = generarJWT({id:usuario.id,nombre:usuario.nombre})
+     
+     console.log(token)
 
+     //Almacenar en un cookie
+     return res.cookie('_token',token,{
+        httpOnly: true,
+        secure:true,
+        sameSite:true
+     }).redirect('/mis-propiedades')
 }
 
 const formularioRegistro = (req,res) => {
