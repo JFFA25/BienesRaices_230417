@@ -1,7 +1,8 @@
 import { body, check ,checkExact,validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 import Usuario from '../Models/Usuario.js'
-import {generarId} from '../Helpers/tokens.js'
+import {generarJWT,generarId} from '../Helpers/tokens.js'
 import {emailRegistro , emailOlvidePassword} from '../Helpers/emails.js'
 import { where } from 'sequelize'
 import pkg from 'nodemailer/lib/xoauth2/index.js';
@@ -13,6 +14,66 @@ const formularioLogin = (req,res) => {
          csrfToken : req.csrfToken()
     })
 }
+const autenticar = async (req, res) => {
+    //Validacion
+    await check('email').isEmail().withMessage('El email es un campo obligatorio ').run(req)
+    await check('password').notEmpty().withMessage('La contraseña es un campo obligatorio').run(req)
+
+    let resultado = validationResult(req)
+    if(!resultado.isEmpty()){
+        //Errores
+        return res.render('auth/login',{
+            pagina : 'Iniciar Sesion',
+            csrfToken : req.csrfToken(),
+            errores: resultado.array(),
+            usuario: {
+                nombre : req.body.nombre,
+                email : req.body.email,
+                fecha: req.body.fecha,
+            }               
+        })
+    }
+
+   
+    const  { email , password } = req.body
+     //Comprobar si el usuario existe
+     const usuario = await Usuario.findOne({where: {email}})
+     if(!usuario){
+        return res.render('auth/login',{
+            pagina : 'Iniciar Sesion',
+            csrfToken : req.csrfToken(),
+            errores : [{msg: 'El Usuario No Existe'}]
+        })
+     }
+     //Comprobar si el usuario esta confirmado
+     if(!usuario.confirmado){
+        return res.render('auth/login',{
+            pagina : 'Iniciar Sesion',
+            csrfToken : req.csrfToken(),
+            errores : [{msg: 'Tu cuenta no ha sido Confirmada'}]
+        })
+     }
+     //Revisar la contraseña
+     if(!usuario.verificarPassword(password)){
+        return res.render('auth/login',{
+            pagina : 'Iniciar Sesion',
+            csrfToken : req.csrfToken(),
+            errores : [{msg: 'La Contraseña es Incorrecta'}]
+        })
+     }
+     //Autenticar el usuario
+     const token = generarJWT({id:usuario.id,nombre:usuario.nombre})
+     
+     console.log(token)
+
+     //Almacenar en un cookie
+     return res.cookie('_token',token,{
+        httpOnly: true,
+        secure:true,
+        sameSite:true
+     }).redirect('/mis-propiedades')
+}
+
 const formularioRegistro = (req,res) => {
 
     res.render('auth/registro',{
@@ -46,6 +107,8 @@ const registrar = async (req,res) => {
                 }               
             })
         }
+        //Comprobar si el usuario exsite
+
         //Extraer los datos
         const {nombre,email,password,fecha} = req.body
 
@@ -210,6 +273,7 @@ const comprobarToken = async (req, res) => {
 
     export {
     formularioLogin,
+    autenticar,
     formularioRegistro,
     registrar,
     confirmar,
