@@ -16,7 +16,7 @@ Para poder demostrar y aprender la creación y consumo de Interfaces de Programa
 |12.|20/11/2024|Integracion de funcionalidad de creación de cuentas de Usuario|30|⏱️Finalizada|
 |12.|23/11/2024| Examen Practico - Unidad 2|10|⏱️Finalizada|
 |13.|28/11/2024| Implementación de la funcionalidad de la recuperación de la contraseña|20|⏱️Finalizada|
-|14.|10/12/2024| Creando el Controlador y Vista de Administración|50|⏱️Finalizada|
+|14.|10/12/2024| Creando el Controlador y Vista de Administración|10|⏱️Finalizada|
 
 
 ### Tech Stack
